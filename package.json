@@ -1,0 +1,35 @@
+{
+  "name": "ls",
+  "version": "1.0.0",
+  "description": "ohm-playground",
+  "main": "index.js",
+  "dependencies": {
+    "kue": "^0.11.6",
+    "ohm-js": "^0.14.0",
+    "redis": "^2.8.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mallond/ohm-playground.git"
+  },
+  "keywords": [
+    "grammar",
+    "compile",
+    "javascript",
+    "ohm",
+    "DSL",
+    "kue.js",
+    "job control",
+    "job queue"
+  ],
+  "author": "David Mallon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mallond/ohm-playground/issues"
+  },
+  "homepage": "https://github.com/mallond/ohm-playground#readme"
+}

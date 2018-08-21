@@ -1,0 +1,107 @@
+version: '3'
+
+services:
+
+  # Cloud 9 IDE
+  cloud9:
+    container_name: cloud9
+    hostname: cloud9
+    image: kdelfour/cloud9-docker
+    links:
+      - "mongodb:mongodb"
+      - "postgresql:postgresql"
+      - "redis:redis"
+    ports:
+      - "8089:80"
+      - "3000:3000"
+    restart: always
+
+  # Redis In memory data store
+  redis:
+    container_name: redis
+    environment:
+      PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      GOSU_VERSION: 1.10
+      REDIS_VERSION: 4.0.11
+      REDIS_DOWNLOAD_URL: http://download.redis.io/releases/redis-4.0.11.tar.gz
+      REDIS_DOWNLOAD_SHA: fc53e73ae7586bcdacb4b63875d1ff04f68c5474c1ddeda78f00e5ae2eed1bbb
+    hostname: redis
+    image: redis
+    ports:
+      - "6379:6379"
+    restart: always
+
+  # Redis UI explore the store
+  redisCommander:
+    image: tenstartups/redis-commander
+    depends_on:
+      - redis
+    command: --redis-host redis
+    links:
+      - redis:redis
+    ports:
+      - "8094:8081"
+    restart: always
+
+  # Mongo DB
+  mongodb:
+    container_name: mongodb-primary
+    hostname: mongodb-primary
+    image: mongo
+    ports:
+      - "27017:27017"
+      - "28017:28017"
+    restart: always
+
+  # Mongo Express UI
+  mongo-express:
+    container_name: mongo-express
+    environment:
+      ME_CONFIG_OPTIONS_EDITORTHEME: "ambiance"
+      ME_CONFIG_BASICAUTH_USERNAME: "user"
+      ME_CONFIG_BASICAUTH_PASSWORD: "password"
+      ME_CONFIG_MONGODB_SERVER: "mongodb"
+    hostname: mongo-express
+    image: mongo-express
+    depends_on:
+      - mongodb
+    links:
+      - mongodb:mongodb
+    ports:
+      - "8095:8081"
+    restart: always
+
+  # Postgres
+  postgresql:
+    container_name: postgresql
+    environment:
+      POSTGRES_USER: postgres
+    hostname: postgresql
+    image: postgres
+    ports:
+      - "5432:5432"
+    restart: always
+
+  # Admin the postgres
+  pgadmin:
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_DEFAULT_EMAIL: admin@email.com
+      PATH: /usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      LANG: C.UTF-8
+      GPG_KEY: 0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D
+      PYTHON_VERSION: 3.6.5
+      PYTHON_PIP_VERSION: 10.0.1
+      PYTHONPATH: /pgadmin4
+    hostname: pgadmin
+    image: dpage/pgadmin4
+    links:
+      - "postgresql:postgresql"
+    ports:
+      - "8093:80"
+    restart: always
+
+
+
+
