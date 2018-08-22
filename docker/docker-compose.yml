@@ -7,10 +7,9 @@ services:
     container_name: cloud9
     hostname: cloud9
     image: kdelfour/cloud9-docker
-    links:
-      - "mongodb:mongodb"
-      - "postgresql:postgresql"
-      - "redis:redis"
+    # Use Git and other in local mounted directory
+    volumes:
+      - ~/git:/var/git
     ports:
       - "8089:80"
       - "3000:3000"
@@ -37,16 +36,14 @@ services:
     depends_on:
       - redis
     command: --redis-host redis
-    links:
-      - redis:redis
     ports:
       - "8094:8081"
     restart: always
 
   # Mongo DB
-  mongodb:
-    container_name: mongodb-primary
-    hostname: mongodb-primary
+  mongo:
+    container_name: mongo
+    hostname: mongo
     image: mongo
     ports:
       - "27017:27017"
@@ -60,23 +57,21 @@ services:
       ME_CONFIG_OPTIONS_EDITORTHEME: "ambiance"
       ME_CONFIG_BASICAUTH_USERNAME: "user"
       ME_CONFIG_BASICAUTH_PASSWORD: "password"
-      ME_CONFIG_MONGODB_SERVER: "mongodb"
+      ME_CONFIG_MONGODB_SERVER: "mongo"
     hostname: mongo-express
     image: mongo-express
     depends_on:
-      - mongodb
-    links:
-      - mongodb:mongodb
+      - mongo
     ports:
       - "8095:8081"
     restart: always
 
   # Postgres
-  postgresql:
-    container_name: postgresql
+  postgres:
+    container_name: postgres
     environment:
       POSTGRES_USER: postgres
-    hostname: postgresql
+    hostname: postgres
     image: postgres
     ports:
       - "5432:5432"
@@ -96,8 +91,6 @@ services:
       PYTHONPATH: /pgadmin4
     hostname: pgadmin
     image: dpage/pgadmin4
-    links:
-      - "postgresql:postgresql"
     ports:
       - "8093:80"
     restart: always
