@@ -3,13 +3,15 @@ version: '3'
 services:
 
   # Cloud 9 IDE
+  # Coolness - Please create a workspace at you HOME directory called c9workspace. This will enable
+  #   a local mounted volume and be secure from other Docker Users - Watchman
   cloud9:
     container_name: cloud9
     hostname: cloud9
-    image: kdelfour/cloud9-docker
+    image: mallond/cloud9
     # Use Git and other in local mounted directory
     volumes:
-      - ~/git:/var/git
+      - ~/c9workspace:/workspace
     ports:
       - "8089:80"
       - "3000:3000"
@@ -44,7 +46,7 @@ services:
   mongo:
     container_name: mongo
     hostname: mongo
-    image: mongo
+    image: bitnami/mongodb
     ports:
       - "27017:27017"
       - "28017:28017"

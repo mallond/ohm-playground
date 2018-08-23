@@ -4,6 +4,10 @@ Experimental Ohm Grammar, parser and compiler for DSL - with a little Redis on t
 ## Using 
 [Kue.js Job-Queue](https://github.com/Automattic/kue)
 
+Starting the UI
+- node_modules/kue/bin/kue-dashboard -p 3050 -r redis://127.0.0.1:6379 -q prefix
+
+
 ## Redis
 - [Node.js Integration](https://redis.io/clients#nodejs)
 - [Recomended Client for Node](https://github.com/NodeRedis/node_redis)
