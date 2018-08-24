@@ -1,6 +1,8 @@
 # ohm-playground
 Experimental Ohm Grammar, parser and compiler for DSL - with a little Redis on the side! 
 
+**Beware** - Junkyard of stuff. As I said this is a 'Playground!'
+
 ## Using 
 [Kue.js Job-Queue](https://github.com/Automattic/kue)
 
@@ -53,3 +55,32 @@ http://localhost:3444/
 [Queue Jobs with Kue](https://blog.jscrambler.com/queue-jobs-kue)
 
 
+# AWS Cloud9 Notes
+
+Available Services
+```
+sudo service --status-all
+```
+
+Redis
+```
+sudo service redis-server start
+```
+
+Postgresql
+```
+sudo service postgresql start
+```
+
+Mongo Install
+```
+sudo apt-get install -y mongodb-org
+
+$ mkdir data
+$ echo 'mongod --bind_ip=$IP --dbpath=data --nojournal --rest "$@"' > mongod
+$ chmod a+x mongod
+
+$ ./mongod
+
+$ mongo
+```
