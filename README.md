@@ -63,9 +63,37 @@ sudo service --status-all
 ```
 
 Redis
+> Key Pair data store (with namespace), in-memory, built in replication
+
+Benchmark
+```
+redis-benchmark -q -n 1000 -c 10 -P 5
+
+```
+
 ```
 sudo service redis-server start
+
+command line in: redis-cli
+
+Quick and Dirty
+- redis-cli -h <host> -p <port> pin
+- keys *
+- flushall
+- info
+- set <key> value
+- set <namespace>:<key> value
+- get <key>
+- get <namespace>:<key> 
+- del <key>
+- del <namespace>:<key>
+- lpush <list> value
+- lpush <namespace>:<list> value
+- lrange <list> 0 -1
+- lrange <namespace>:<list> 0 -1
+
 ```
+
 
 Postgresql
 ```
